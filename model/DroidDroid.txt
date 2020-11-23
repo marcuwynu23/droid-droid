@@ -1,0 +1,44 @@
+================================================
+::initial 
+     remote_path=/storage/emulated/0
+     local_path=C:\Users\admin\Desktop 
+     working_directory=AppProjects
+     idePackageName=com.aide.ui
+     cmdTerminal=cmd 
+     editorChoice=subl
+::coordinate for running ide
+     compilex=497 
+     compiley=118
+      runx=632
+      runy=1457
+
+::userInput
+     project-name=
+     package-name=
+     apk-name=
+=============================================
+MenuBar:
+      settings -> Settings Menu
+      settings Menu:		
+	label/textField: remote_path,local_path,working_directory,cmdTerminal,editorChoice
+	label/textField: compileX,compilerY,runX,runY
+	button:saveConfig	
+MainForm:
+      label/textField: project-name,package-name,apk-name
+      button: ide,cmd,e,psa,pla,ps,pl,ut,it,ra,cr
+================================================
+ide       -> process -> (adb she'll monkey -p [idePackage] 1)
+cmd    -> process -> (start [cmdTerminal])
+e          -> process -> ([editorChoice])
+psa     -> process -> (adb push [local_path]\[working_directory] [remote_path])
+pla      -> process -> (abd pull [remote_path]/[working_directory] [local_path])
+ps       -> process -> (cd [local_path]/[working_directory] && adb push [project-name] [remote_path]/[working_directory]) 
+pl        -> process -> (adb pull [remote_path]/[working_directory]/[project-name] [working_directory]) 
+ ut       -> process -> (adb uninstall [package-name]);
+it         -> process ->(adb install [apk-file])
+ra        -> process ->(adb shell monkey -p [package-name] 1)
+cr        -> {
+	process ->(adb shell input tap [compileX] [compileY])
+	process ->(adb shell input tap [runX] [runY])
+}
+
